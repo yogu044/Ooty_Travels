@@ -10,14 +10,6 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Main fields are required" });
     }
 
-    const exist = await admin.findOne({ email });
-    if (exist) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
-
-   
-   
-
     
     const transporter = nodemailer.createTransport({
       service: 'gmail', 
