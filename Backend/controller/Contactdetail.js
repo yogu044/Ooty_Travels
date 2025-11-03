@@ -6,25 +6,21 @@ const submitContactForm = async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
 
-    
+    // Validate fields
     if (!name || !email || !subject || !message) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-   
-  
-    
-
-  
+    // Create mail transporter using Gmail
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, 
+        pass: process.env.EMAIL_PASS,
       },
     });
 
-   
+    // Email content
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: "kingyogu505@gmail.com",
@@ -41,14 +37,27 @@ const submitContactForm = async (req, res) => {
       `,
     };
 
-  
+    // Send email
     await transporter.sendMail(mailOptions);
 
+    // Optional: Save contact to database
+    const newContact = new Contact({ name, email, subject, message });
+    await newContact.save();
+
+    // Respond to client
     res.status(200).json({ message: "Contact form submitted successfully" });
   } catch (error) {
-    console.error("Contact form error:", error);
-    res.status(500).json({ message: "Internal server error" });
+  console.error("Contact form error:", error);
+
+  if (error.response) {
+    console.error("Nodemailer error response:", error.response);
   }
+  
+  res.status(500).json({
+    message: "Internal server error",
+    error: error.message,
+  });
+}
 };
 
 module.exports = { submitContactForm };

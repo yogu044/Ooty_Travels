@@ -55,10 +55,17 @@ const register = async (req, res) => {
 
     return res.status(201).json({ message: "Data added and email sent successfully", user: newUser });
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({ message: "Server error", error: error.message });
+  console.error("Contact form error:", error);
 
+  if (error.response) {
+    console.error("Nodemailer error response:", error.response);
   }
+  
+  res.status(500).json({
+    message: "Internal server error",
+    error: error.message,
+  });
+}
 };
 
 module.exports = register;
