@@ -4,6 +4,7 @@ import "../css/popup.css";
 import { useNavigate } from 'react-router-dom';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import PopupDetails from '../../mail/PopupDetails';
 
 export default function PopupForm() {
   const navigate = useNavigate();
@@ -28,8 +29,8 @@ export default function PopupForm() {
         checkout: formdata.checkout ? formdata.checkout.toISOString() : ''
       };
 
-      const res = await axios.post("https://ooty-travels.onrender.com/details/add", submitData);
-      alert(res.data.message || "Details added successfully!");
+      const res = await PopupDetails(submitData);
+      alert(res.data.message || "Details Sended successfully!");
       navigate('/home');
     } catch (error) {
       alert(error.response?.data?.message || "Registration failed");

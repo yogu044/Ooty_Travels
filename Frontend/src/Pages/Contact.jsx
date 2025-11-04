@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from 'lucide-react';
 import "../css/contact.css"; 
+import ContactDetails from '../../mail/ContactDetails';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -25,9 +26,8 @@ const Contact = () => {
     setError(null);
 
     try {
-      const res = await axios.post("https://ooty-travels.onrender.com/contact/send", formData); 
+      const res = await ContactDetails(formData); 
      
-
       if (res.status === 200) {
         setSubmitted(true);
         setFormData({ name: '', email: '', subject: '', message: '' });
