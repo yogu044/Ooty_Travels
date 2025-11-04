@@ -14,6 +14,7 @@ const ContactDetails = async (submitData) => {
       },
       "4YIZTVXa4OPjLO6by" 
     );
+    alert(" Message sent successfully! We'll contact you soon.");
 
     console.log(" Email sent successfully:", response.status, response.text);
     return { data: { message: "Booking details sent successfully!" } };
