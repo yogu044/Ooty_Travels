@@ -15,7 +15,7 @@ const contactRouter = require('./routes/Conatcts');
 
 var app = express();
 
-const cors = require("cors");
+
 
 // ✅ Add this before your routes and after express setup
 app.use(cors({
